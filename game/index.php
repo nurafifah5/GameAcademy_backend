@@ -25,7 +25,7 @@ if($notification) {
 ?>
 
 <h1>Welcome <?php echo $userdata['username'] ?>!</h1>
-<p>Games List </p>
+<h3>PAGE : GAMES LIST </h3>
 
 <table>
    <tr>MENU</tr>
@@ -72,71 +72,67 @@ if($notification) {
             </form>
          </td>
          <td>
-            <button><a href = "../game/edit_game.php">EDIT</a></button>
+            <form action="http://localhost/gameacademy_backend/game/edit_game.php" method='POST'>
+               <input type="hidden" name="gameid" value="<?php echo "".$g['game_id'].""; ?>">
+               <input type="submit" value="EDIT">
+            </form>
          </td>
          <td>
-            <button><a href = "../game/delete_game.php">DELETE</a></button>
+            <form action="http://localhost/gameacademy_backend/game/delete_game_process.php" method='POST'>
+               <input type="hidden" name="gameid" value="<?php echo "".$g['game_id'].""; ?>">
+               <input type="submit" value="DELETE">
+            </form>
          </td>
       </tr>
+
       <?php 
    }
    ?>
 </table>
 <br/><br/>
 
-<?php
-//show level lists
 
+
+<!-- SHOW LEVEL LIST !-->
+<?php
 if(isset($_GET['gameid'])) {
-   echo "".$_GET['gamename']." Level List <br>"; ?>
-   
-   <!--<form action="http://localhost/gameacademy_backend/game/insert_level.php" method='POST'>
-      <input type="hidden" name="sourcegameid" value="<?php echo "".$gamedata['game_id'].""; ?>">
-      <input type="hidden" name="sourcegamename" value="<?php echo "".$gamedata['game_name'].""; ?>">
-      <input type="submit" value="Add new level">
-   </form>-->
-   <button><a href = "../game/insert_game.php">Add new game</a></button>
-   <br/><br/>
+   echo "".$_GET['gamename']." Level List <br/>"; ?>
+   <br/>
+   <form action="http://localhost/gameacademy_backend/game/insert_level.php" method='POST'>
+      <input type="hidden" name="gameid" value="<?php echo "".$_GET['gameid'].""; ?>">
+      <input type="hidden" name="gamename" value="<?php echo "".$_GET['gamename'].""; ?>">
+      <input type="submit" value="Add New Level">
+   </form>
    <table border = 1>
       <tr>
          <td>Name</td>
-         <td>Start Time</td>
-         <td>End Time</td>
-         <td>Status</td>
-         <td></td>
+         <td>Description</td>
          <td></td>
          <td></td>
       </tr>
       <?php 
-      $gamedata = $db->get("SELECT * FROM game");               
-      while($g = mysqli_fetch_assoc($gamedata)) {
-         ?>
-         <tr>
-            <td><?php echo $g['game_name'];?></td>
-            <td><?php echo $g['time_start'];?></td>
-            <td><?php echo $g['time_end'];?></td>
-            <td>
-               <?php if($g['status'] == 1) {
-                  echo "Active";
-               } else {
-                  echo "Hiatus";
-               } ?>
-            </td>
-            <td>
-               <form action="http://localhost/gameacademy_backend/game/" method='GET'>
-                  <input type="hidden" name="gameid" value="<?php echo "".$g['game_id'].""; ?>">
-                  <input type="hidden" name="gamename" value="<?php echo "".$g['game_name'].""; ?>">
-                  <input type="submit" value="Show Levels">
-               </form>
-            </td>
-            <td>
-               <button><a href = "../game/edit_game.php">EDIT</a></button>
-            </td>
-            <td>
-               <button><a href = "../game/delete_game.php">DELETE</a></button>
-            </td>
-         </tr>
-         <?php 
+      $leveldata = $db->get("SELECT * FROM level WHERE level.game_id = '".$_GET['gameid']."'");
+      if($leveldata) {               
+         while($e = mysqli_fetch_assoc($leveldata)) {
+            ?>
+            <tr>
+               <td><?php echo $e['level_name'];?></td>
+               <td><?php echo $e['description'];?></td>
+               <td>
+                  <form action="http://localhost/gameacademy_backend/game/edit_level.php" method='POST'>
+                     <input type="hidden" name="levelid" value="<?php echo "".$e['gameLevel_id'].""; ?>">
+                     <input type="submit" value="EDIT">
+                  </form>
+               </td>
+               <td>
+                  <form action="http://localhost/gameacademy_backend/game/delete_level_process.php" method='POST'>
+                     <input type="hidden" name="levelid" value="<?php echo "".$e['gameLevel_id'].""; ?>">
+                     <input type="submit" value="DELETE">
+                  </form>
+               </td>
+            </tr>
+            <?php 
+         }
       }
       ?>
    </table>

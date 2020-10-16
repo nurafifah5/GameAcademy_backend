@@ -22,27 +22,30 @@ if($notification) {
 	unset($_SESSION['notification']);   
 }
 
+$leveldata = $db->get("SELECT * FROM level WHERE gameLevel_id = '".$_POST['levelid']."'");
+
 ?>
 
 <h1>Welcome <?php echo $userdata['username'] ?>!</h1>
-<h3> Add New Level to Game "<?php echo $_POST['gamename'] ?> "<br/></h3>
-
-<form action="insert_level_process.php" method="POST">
+<p> Edit Level <br/></p>
+<form action="edit_level_process.php" method="POST">
 	<table>
-		<input type="hidden" name="game_id" value="<?php echo $_POST['gameid'] ?>">
-		<tr>
-			<td>Level Name</td>
-			<td>:</td>
-			<td><input type="text" name="level_name" required></td>
-		</tr>
-		<tr>
-			<td>Description</td>
-			<td>:</td>
-			<td><input type="text" name="description" required></td>
-		</tr>
-		<tr>
-			<td colspan=3><input type="submit" value="ADD LEVEL"></td>
-		</tr>      
+		<?php while($e = mysqli_fetch_assoc($leveldata)) { ?>
+			<input type="hidden" name="gameLevel_id" value="<?php echo $e['gameLevel_id'] ?>">
+			<tr>
+				<td>Level Name</td>
+				<td>:</td>
+				<td><input type="text" name="level_name" required value="<?php echo $e['level_name'] ?>"></td>
+			</tr>
+			<tr>
+				<td>Description</td>
+				<td>:</td>
+				<td><input type="text" name="description" required value="<?php echo $e['description'] ?>"></td>
+			</tr>
+			<tr>
+				<td colspan=3><input type="submit" value="EDIT LEVEL GAME"></td>
+			</tr>      
+		<?php } ?>
 	</table>
 </form>
 <br/>

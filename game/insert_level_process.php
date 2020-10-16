@@ -14,7 +14,7 @@ if($level_name && $description && $game_id) {
 	if($result){    
 		$_SESSION["notification"] = "Level Registration Success";    
 	} else {    
-		$_SESSION["notification"] = "Level Registration Failed;
+		$_SESSION["notification"] = "Level Registration Failed";
 	}
 }
 

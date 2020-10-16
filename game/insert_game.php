@@ -1,6 +1,6 @@
 <?php
 SESSION_START();
-include("database.php");
+include("../database.php");
 
 $db = new Database();
 
@@ -9,25 +9,25 @@ $token = (isset($_SESSION['token'])) ? $_SESSION['token'] : "";
 $level = (isset($_SESSION['level'])) ? $_SESSION['level'] : "";
 
 if($token && $user_id && $level){
-	$result = $db->execute("SELECT * FROM user WHERE user_id = '".$user_id."' AND token = '".$token."' AND status = 1 ");
-	if($result){
-		header("Location: http://localhost/gameacademy_backend/user/");
-	}
+	$userdata = $db->get("SELECT user.email as email, user.username as username, user.status as status FROM user WHERE user.user_id = '".$user_id."'");              
+	$userdata = mysqli_fetch_assoc($userdata);
+} else {
+	header("Location: http://localhost/gameacademy_backend/");
 }
 
-// token tidak tersedia
 $notification = (isset($_SESSION['notification'])) ? $_SESSION['notification'] : "";
 
 if($notification) {
-	echo $notification;
+	echo $notification; 
 	unset($_SESSION['notification']);   
 }
+
 ?>
 
 <h1>Welcome <?php echo $userdata['username'] ?>!</h1>
-<p> Add New Game <br/></p>
+<h3> Add New Game <br/></h3>
 
-<form action="game/insert_game_process.php" method="POST">
+<form action="insert_game_process.php" method="POST">
 	<table>
 		<tr>
 			<td>Game Name</td>

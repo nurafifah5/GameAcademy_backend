@@ -22,27 +22,35 @@ if($notification) {
 	unset($_SESSION['notification']);   
 }
 
+$gamedata = $db->get("SELECT * FROM game WHERE game_id = '".$_POST['gameid']."'");
+
 ?>
 
 <h1>Welcome <?php echo $userdata['username'] ?>!</h1>
-<h3> Add New Level to Game "<?php echo $_POST['gamename'] ?> "<br/></h3>
-
-<form action="insert_level_process.php" method="POST">
+<p> Edit Game <br/></p>
+<form action="edit_game_process.php" method="POST">
 	<table>
-		<input type="hidden" name="game_id" value="<?php echo $_POST['gameid'] ?>">
-		<tr>
-			<td>Level Name</td>
-			<td>:</td>
-			<td><input type="text" name="level_name" required></td>
-		</tr>
-		<tr>
-			<td>Description</td>
-			<td>:</td>
-			<td><input type="text" name="description" required></td>
-		</tr>
-		<tr>
-			<td colspan=3><input type="submit" value="ADD LEVEL"></td>
-		</tr>      
+		<?php while($g = mysqli_fetch_assoc($gamedata)) { ?>
+			<input type="hidden" name="game_id" value="<?php echo $g['game_id'] ?>">
+			<tr>
+				<td>Game Name</td>
+				<td>:</td>
+				<td><input type="text" name="game_name" required value="<?php echo $g['game_name'] ?>"></td>
+			</tr>
+			<tr>
+				<td>Time Start</td>
+				<td>:</td>
+				<td><input type="date" name="time_start" required value="<?php echo $g['time_start'] ?>"></td>
+			</tr>
+			<tr>
+				<td>Time End</td>
+				<td>:</td>
+				<td><input type="date" name="time_end" required value="<?php echo $g['time_end'] ?>"></td>
+			</tr>  
+			<tr>
+				<td colspan=3><input type="submit" value="EDIT GAME"></td>
+			</tr>      
+		<?php } ?>
 	</table>
 </form>
 <br/>

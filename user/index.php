@@ -34,7 +34,7 @@ if($notification) {
    <tr>MENU</tr>
    <tr>
       <td><a href="http://localhost/gameacademy_backend/user/">HOME</a></td>
-      <td><a href="http://localhost/gameacademy_backend/user/statistik.php">STATISTIK</a></td>       
+      <td><a href="http://localhost/gameacademy_backend/user/statistik.php">STATISTIC</a></td>       
       <td><a href="http://localhost/gameacademy_backend/game/leaderboard.php">LEADERBOARD</a></td>
       <td><a href="http://localhost/gameacademy_backend/user/logout.php">LOGOUT</a></td>
    </tr>

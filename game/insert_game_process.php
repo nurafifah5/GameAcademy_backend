@@ -15,9 +15,9 @@ if($game_name && $time_start && $time_end) {
 	if($result){    
 		$_SESSION["notification"] = "Game Registration Success";    
 	} else {    
-		$_SESSION["notification"] = "Game Registration Failed;
+		$_SESSION["notification"] = "Game Registration Failed";
 	}
 }
+header("Location: http://localhost/gameacademy_backend/game");
 
-header("Location: http://localhost/gameacademy_backend/game");   
 ?>
